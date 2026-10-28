@@ -1,0 +1,26 @@
+VERIFICATION RECEIPT
+
+Verified:        2026-11-03 15:41 (local time)
+Document:        clear-to-close-letter
+Client:          Alanna Brizuela, Esq. - 17 Windham Ct, Holbrook
+Template:        clear-to-close-letter  (Doc Factory 1.0.2)
+Verified by:     Deirdre Kowalczyk, Licensed Title Agent
+File released:   clear-to-close-letter-brizuela-2026-11-03.html
+
+Sources this document drew from:
+  - L1 - clear to close letter of 2026-10-14 (examination and clear-to-close paragraph)
+  - L2 - clear to close letter of 2026-10-14 (search period and continuation search)
+  - L3 - clear to close letter of 2026-10-14 (open items lead-in)
+  - L4 - clear to close letter of 2026-10-14 (premium and rate basis)
+  - L5 - clear to close letter of 2026-10-14 (wire instruction policy)
+  - fields supplied this run: 9
+  - fields carried from prior runs: 3 (sender name, address, contact line)
+
+Flagged items accepted:
+  - Item 1 of the open items names no responsible party (owner marked this deliberately omitted)
+
+Attestation ticked:
+  "I have read this document, including the items flagged above, and I accept it as mine to send."
+
+This receipt covers only the version accepted at the time above.
+Any change to the document requires a new verification.

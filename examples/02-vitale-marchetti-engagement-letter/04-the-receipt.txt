@@ -1,0 +1,25 @@
+VERIFICATION RECEIPT
+
+Verified:        2026-08-12 10:05 (local time)
+Document:        engagement-letter
+Client:          Bay Ridge Dental Group
+Template:        engagement-letter  (Doc Factory 1.0.1)
+Verified by:     Gina Vitale, CPA, Managing Partner, Vitale & Marchetti CPAs
+File released:   engagement-letter-bay-ridge-dental-2026-08-12.html
+
+Sources this document drew from:
+  - L1, L2 (opening and reliance paragraph) - engagement letter of 2026-03-03
+  - L3 (scope of work) - same source
+  - L4 (scope boundary) - wording supplied by the owner at extract time, 2026-08-12; not present in the source letter
+  - L6 (acceptance mechanism and sign-off) - engagement letter of 2026-03-03
+  - fields supplied this run: 11
+  - fields carried forward from prior runs: 0 (first engagement letter built from this template)
+
+Flagged items accepted:
+  - No term and termination clause. Owner asked to keep flagging this until her attorney advises. Accepted knowingly.
+
+Attestation ticked:
+  "I have read this document, including the items flagged above, and I accept it as mine to send."
+
+This receipt covers only the version accepted at the time above.
+Any change to the document requires a new verification.

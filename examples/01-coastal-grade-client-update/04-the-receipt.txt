@@ -1,0 +1,24 @@
+VERIFICATION RECEIPT
+
+Verified:        2026-08-12 14:32 (local time)
+Document:        client-update-letter
+Client:          Denise Vardalos, Hauppauge Industrial Realty Partners
+Template:        client-update-letter  (Doc Factory 1.0.1)
+Verified by:     Nick Petrakis, Owner, Coastal Grade Landscaping & Hardscape LLC
+File released:   client-update-letter-vardalos-2026-08-12.html
+
+Sources this document drew from:
+  - L1 (opening) - client update letter to Sagamore Property Group, 2025-10-09
+  - L2, L3, L4 (section headings) - same source, identical across all three letters supplied
+  - L7 (closing paragraph and sign-off) - same source
+  - fields supplied this run: 9
+  - fields carried forward from run of 2026-07-08: 0 (first letter to this client)
+
+Flagged items accepted:
+  - (none)
+
+Attestation ticked:
+  "I have read this document, including the items flagged above, and I accept it as mine to send."
+
+This receipt covers only the version accepted at the time above.
+Any change to the document requires a new verification.

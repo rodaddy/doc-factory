@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verify before release</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%236b1f2a'/><path d='M9 17l5 5 9-11' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<!--
+  INTERNAL VERIFICATION-GATE SHELL — DO NOT HAND THIS FILE TO THE CUSTOMER.
+
+  This is the deterministic spine of the held-until-verified gate. The AI does
+  NOT re-invent this page per document. It CLONES this file and fills the six
+  marked slots. The gate logic below is fixed: it is a script, and a script
+  landing the same result every time beats prose the AI may or may not honor.
+
+  The six slots the AI fills (search for FILL:):
+    FILL:BRAND-PRIMARY   the brand primary color hex, in the two CSS vars
+    FILL:LETTERHEAD      business name (or <img src="logo.png" height="48">)
+                         and contact line, from branding/brand.md
+    FILL:DOCUMENT        the finished, HTML-escaped, bold-converted body,
+                         starting at the date, NO sender block
+    FILL:CHECKS          one <li class="flag|pass"> per check from review-checks.md
+    FILL:PROVENANCE      one <li> per section, citing its L number and source
+    FILL:META            the JSON block: document name, client, template name,
+                         kit version, source list, flag list
+
+  What the AI must NOT change: the attestation sentence, the disabled-until-
+  ticked button, the single-click stamp, the watermark removal, or the two
+  data-URI downloads. Those ARE the gate. See workflows/fill-and-render.md
+  Step 6 and the kit standard section 4.9.
+
+  No network calls. No CDN. Opens from file:// and works offline, forever.
+-->
+<style>
+  :root {
+    --primary: #6b1f2a;            /* FILL:BRAND-PRIMARY */
+    --primary-soft: #6b1f2a1a;     /* FILL:BRAND-PRIMARY at 10% */
+    --ink: #1a1a1a;
+    --muted: #5a5a5a;
+    --flag: #a4611a;
+    --line: #d8d5d0;
+    --page: #f4f2ee;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--page);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .wrap { max-width: 8in; margin: 0 auto; padding: 0 16px 64px; }
+
+  #banner {
+    background: var(--primary);
+    color: #fff;
+    padding: 14px 16px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-align: center;
+  }
+  #banner small { display: block; font-weight: 400; opacity: 0.9; margin-top: 3px; }
+
+  .panel {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin: 20px 0;
+    overflow: hidden;
+  }
+  .panel > h2 {
+    margin: 0;
+    padding: 12px 18px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--primary);
+    border-bottom: 1px solid var(--line);
+    background: var(--primary-soft);
+  }
+  .panel > .body { padding: 18px; }
+
+  /* ---- the document preview, watermarked until verified ---- */
+  #preview { position: relative; }
+  #preview.held::after {
+    content: "PREVIEW - NOT VERIFIED";
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 42px; font-weight: 700; letter-spacing: 4px;
+    color: rgba(107, 31, 42, 0.13);
+    transform: rotate(-24deg);
+    pointer-events: none;
+    user-select: none;
+  }
+  #doc {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 11.5pt;
+    line-height: 1.5;
+    background: #fff;
+    padding: 8px 4px;
+  }
+  #doc .letterhead {
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 8px;
+    margin-bottom: 24px;
+  }
+  #doc .letterhead .name {
+    font-size: 18pt; font-weight: bold; letter-spacing: 0.5px; color: var(--primary);
+  }
+  #doc .letterhead .contact { font-size: 9.5pt; color: #555; margin-top: 2px; }
+  #doc .letter { white-space: pre-wrap; }
+
+  /* ---- checks ---- */
+  ul.checks { list-style: none; margin: 0; padding: 0; }
+  ul.checks li { padding: 8px 0 8px 26px; position: relative; border-bottom: 1px solid #eee; }
+  ul.checks li:last-child { border-bottom: 0; }
+  ul.checks li::before { position: absolute; left: 0; top: 8px; font-weight: 700; }
+  ul.checks li.pass::before { content: "OK"; color: #2e6b3e; font-size: 11px; }
+  ul.checks li.flag::before { content: "!"; color: var(--flag); }
+  ul.checks li.flag { background: #fdf6ec; }
+  ul.checks li q { color: var(--muted); font-style: italic; }
+  #passes { display: none; }
+  #passToggle {
+    background: none; border: 0; color: var(--primary); cursor: pointer;
+    padding: 8px 0 0; font-size: 13px; text-decoration: underline;
+  }
+
+  /* ---- provenance ---- */
+  ul.prov { margin: 0; padding-left: 20px; }
+  ul.prov li { margin-bottom: 7px; }
+
+  /* ---- attestation ---- */
+  #attest { border-color: var(--primary); }
+  #attestLabel { display: flex; gap: 10px; align-items: flex-start; font-weight: 600; cursor: pointer; }
+  #attestLabel input { margin-top: 4px; width: 18px; height: 18px; flex: none; }
+  #accept {
+    margin-top: 16px; width: 100%; padding: 15px;
+    font-size: 16px; font-weight: 700; font-family: inherit;
+    color: #fff; background: var(--primary);
+    border: 0; border-radius: 6px; cursor: pointer;
+  }
+  #accept:disabled { background: #b9b5b0; cursor: not-allowed; }
+  #fineprint { margin-top: 10px; font-size: 13px; color: var(--muted); }
+
+  /* ---- post-verification ---- */
+  #released { display: none; }
+  #released.on { display: block; }
+  #receipt {
+    white-space: pre-wrap;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12px; background: #fbfaf8; border: 1px solid var(--line);
+    border-radius: 6px; padding: 14px; color: #333;
+  }
+  .dl { display: inline-block; margin: 12px 12px 0 0; padding: 12px 18px;
+        background: var(--primary); color: #fff; text-decoration: none;
+        border-radius: 6px; font-weight: 600; }
+  .dl.secondary { background: #fff; color: var(--primary); border: 1px solid var(--primary); }
+  .reverify { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  @media print { #banner, .panel > h2, #attest, #released, #passToggle { display: none !important; } }
+</style>
+</head>
+<body>
+
+<div id="banner">
+  NOT YET RELEASED
+  <small>This document is a preview until you verify it at the bottom of this page.</small>
+</div>
+
+<div class="wrap">
+
+  <div class="panel held" id="preview">
+    <h2>The document</h2>
+    <div class="body">
+      <div id="doc">
+        <!-- FILL:LETTERHEAD -->
+        <div class="letterhead">
+          <div class="name">{{sender business name}}</div>
+          <div class="contact">{{sender contact line}}</div>
+        </div>
+        <!-- FILL:DOCUMENT — finished body, HTML-escaped, starts at the date -->
+        <div class="letter">{{finished document body}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>What I checked</h2>
+    <div class="body">
+      <ul class="checks" id="flags">
+        <!-- FILL:CHECKS — flagged items first, e.g.
+        <li class="flag">No dated deadline on the approval you are asking for.
+          <q>please let us know at your convenience</q></li>
+        -->
+      </ul>
+      <button id="passToggle" type="button">Show the checks that passed</button>
+      <ul class="checks" id="passes">
+        <!-- FILL:CHECKS — passing items, e.g.
+        <li class="pass">Recipient named and spelled the same throughout.</li>
+        -->
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Where this wording came from</h2>
+    <div class="body">
+      <ul class="prov">
+        <!-- FILL:PROVENANCE — one plain sentence per section, e.g.
+        <li>The scope paragraph is your locked wording <strong>L4</strong>, taken
+            from the engagement letter you sent on March 3.</li>
+        <li>The fee figure is what you told me today.</li>
+        <li>The mailing address carried over from the letter of July 8.</li>
+        -->
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel" id="attest">
+    <h2>Your verification</h2>
+    <div class="body">
+      <label id="attestLabel">
+        <input type="checkbox" id="attestBox">
+        <span>I have read this document, including the items flagged above, and I
+        accept it as mine to send.</span>
+      </label>
+      <button id="accept" type="button" disabled>I validate this and I want it</button>
+      <p id="fineprint">
+        Clicking this records that you reviewed and accepted this document, with
+        the date and time. That record is your file copy and ours.
+      </p>
+    </div>
+  </div>
+
+  <div class="panel" id="released">
+    <h2>Verified - your files</h2>
+    <div class="body">
+      <pre id="receipt"></pre>
+      <a class="dl" id="dlDoc" download>Download the finished document</a>
+      <a class="dl secondary" id="dlReceipt" download>Download the verification receipt</a>
+      <p class="reverify">
+        If you change anything in this document, it has to be verified again.
+        Ask for a new version and this page is rebuilt. This receipt covers only
+        the exact version you just accepted.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------------------------------------------------------------------------
+   THE GATE. Fixed logic — the AI fills META below and changes nothing else.
+   No network. No storage. One click, one stamp, offline forever.
+--------------------------------------------------------------------------- */
+
+/* FILL:META — the AI replaces this object and nothing else in this script. */
+var META = {
+  documentName: "client-update-letter",
+  client:       "{{client full name}}",
+  template:     "client-update-letter",
+  kitVersion:   "1.0.5",
+  verifiedBy:   "{{sender full name and title}}",
+  sources:      ["L1 - engagement letter of {{date}}"],
+  flags:        [],
+  fileName:     "client-update-letter-{{client last name}}-{{date}}.html"
+};
+
+var ATTESTATION =
+  "I have read this document, including the items flagged above, and I accept " +
+  "it as mine to send.";
+
+document.getElementById("preview").classList.add("held");
+
+document.getElementById("passToggle").addEventListener("click", function () {
+  var p = document.getElementById("passes");
+  var shown = p.style.display === "block";
+  p.style.display = shown ? "none" : "block";
+  this.textContent = shown ? "Show the checks that passed" : "Hide the checks that passed";
+});
+
+var box = document.getElementById("attestBox");
+var btn = document.getElementById("accept");
+box.addEventListener("change", function () { btn.disabled = !box.checked; });
+
+btn.addEventListener("click", function () {
+  if (!box.checked || btn.disabled) { return; }
+
+  /* 1. Stamp once. A second click cannot re-stamp a different time. */
+  btn.disabled = true;
+  box.disabled = true;
+  var now = new Date();
+  var stamp = now.getFullYear() + "-" +
+    String(now.getMonth() + 1).padStart(2, "0") + "-" +
+    String(now.getDate()).padStart(2, "0") + " " +
+    String(now.getHours()).padStart(2, "0") + ":" +
+    String(now.getMinutes()).padStart(2, "0");
+
+  /* 2. Build the receipt. */
+  var lines = [
+    "VERIFICATION RECEIPT",
+    "",
+    "Verified:        " + stamp + " (local time)",
+    "Document:        " + META.documentName,
+    "Client:          " + META.client,
+    "Template:        " + META.template + "  (Doc Factory " + META.kitVersion + ")",
+    "Verified by:     " + META.verifiedBy,
+    "File released:   " + META.fileName,
+    "",
+    "Sources this document drew from:",
+  ];
+  (META.sources.length ? META.sources : ["(none recorded)"]).forEach(function (s) {
+    lines.push("  - " + s);
+  });
+  lines.push("");
+  lines.push("Flagged items accepted:");
+  (META.flags.length ? META.flags : ["(none)"]).forEach(function (f) {
+    lines.push("  - " + f);
+  });
+  lines.push("");
+  lines.push("Attestation ticked:");
+  lines.push("  \"" + ATTESTATION + "\"");
+  lines.push("");
+  lines.push("This receipt covers only the version accepted at the time above.");
+  lines.push("Any change to the document requires a new verification.");
+  var receipt = lines.join("\n");
+  document.getElementById("receipt").textContent = receipt;
+
+  /* 3. Release: drop the watermark and the banner. */
+  document.getElementById("preview").classList.remove("held");
+  document.getElementById("banner").style.display = "none";
+
+  /* 4. Build the clean releasable document as a data URI — no banner, no
+        checks, no watermark. Print-ready on its own. */
+  var doc = document.getElementById("doc").outerHTML;
+
+  /* The released file must look EXACTLY like the preview that was attested to.
+     Read the live brand colour off this page rather than restating it, so the
+     two can never drift: a hardcoded fallback here would release an unbranded
+     document against a branded attestation. */
+  var BRAND = getComputedStyle(document.documentElement)
+                .getPropertyValue("--primary").trim() || "#6b1f2a";
+
+  var clean =
+    "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\">" +
+    "<title>" + META.documentName + "</title><style>" +
+    ":root{--primary:" + BRAND + "}" +
+    "@page{size:letter;margin:1in}html,body{margin:0;padding:0}" +
+    "#doc{font-family:Georgia,'Times New Roman',serif;font-size:11.5pt;line-height:1.5;color:#1a1a1a;max-width:6.5in;margin:0 auto}" +
+    "#doc .letterhead{border-bottom:2px solid var(--primary);padding-bottom:8px;margin-bottom:24px}" +
+    "#doc .letterhead .name{font-size:18pt;font-weight:bold;letter-spacing:.5px;color:var(--primary)}" +
+    "#doc .letterhead .contact{font-size:9.5pt;color:#555;margin-top:2px}" +
+    "#doc .letter{white-space:pre-wrap}" +
+    "#doc .letterhead img{max-height:56px;width:auto;display:block}" +
+    "</style></head><body>" + doc + "</body></html>";
+
+  var dlDoc = document.getElementById("dlDoc");
+  dlDoc.href = "data:text/html;charset=utf-8," + encodeURIComponent(clean);
+  dlDoc.download = META.fileName;
+
+  var dlRec = document.getElementById("dlReceipt");
+  dlRec.href = "data:text/plain;charset=utf-8," + encodeURIComponent(receipt);
+  dlRec.download = META.fileName.replace(/\.html?$/i, "") + "-receipt.txt";
+
+  document.getElementById("released").classList.add("on");
+  document.getElementById("released").scrollIntoView({ behavior: "smooth" });
+});
+</script>
+</body>
+</html>

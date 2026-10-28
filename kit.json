@@ -1,0 +1,12 @@
+{
+  "name": "doc-factory",
+  "version": "1.0.5",
+  "requirements": {
+    "runtimes": {
+      "node": ">=22.6.0"
+    }
+  },
+  "commands": {
+    "test": "node --test skills/doc-kit/references/universal-checks.test.js"
+  }
+}

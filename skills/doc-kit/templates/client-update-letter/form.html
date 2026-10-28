@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Client Update Letter - Fill the Form</title>
+<style>
+  :root {
+    --ink: #1f2328;
+    --muted: #5b636b;
+    --line: #d9dde1;
+    --bg: #f4f2ec;        /* warm neutral, brand-safe */
+    --card: #ffffff;
+    --accent: #6b1f2a;     /* deep, brand-neutral; replace with your brand color */
+    --accent-soft: #f0e7e8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 32px 20px 80px; }
+  header h1 { font-size: 24px; margin: 0 0 4px; }
+  header p { color: var(--muted); margin: 0 0 24px; }
+  fieldset {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+    padding: 18px 18px 6px;
+    margin: 0 0 20px;
+  }
+  legend { font-weight: 600; padding: 0 8px; color: var(--accent); }
+  label { display: block; font-weight: 600; margin: 14px 0 4px; font-size: 14px; }
+  .hint { font-weight: 400; color: var(--muted); font-size: 13px; }
+  input, textarea {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--line);
+    border-radius: 8px; font: inherit; color: var(--ink); background: #fff;
+  }
+  textarea { min-height: 90px; resize: vertical; }
+  input:focus, textarea:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 24px; }
+  button {
+    font: inherit; font-weight: 600; cursor: pointer;
+    border: 1px solid var(--accent); border-radius: 8px; padding: 11px 18px;
+  }
+  .primary { background: var(--accent); color: #fff; }
+  .ghost { background: #fff; color: var(--accent); }
+  #status { color: var(--muted); font-size: 14px; align-self: center; }
+  h2.out { font-size: 18px; margin: 28px 0 8px; }
+  #output {
+    width: 100%; min-height: 320px; padding: 16px; border: 1px solid var(--line);
+    border-radius: 10px; background: #fff; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px; white-space: pre-wrap;
+  }
+  footer { color: var(--muted); font-size: 13px; margin-top: 32px; }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Client Update Letter</h1>
+    <p>Fill in the boxes, then press <strong>Fill the letter</strong>. Copy the result and hand it back to your AI. It checks the letter, shows you what it found and where the wording came from, and holds it until you accept it - then you get a letterheaded page you just print. You never edit any page yourself.</p>
+  </header>
+
+  <form id="letterForm">
+    <fieldset>
+      <legend>Your details</legend>
+      <label>Your business name<input name="sender business name"></label>
+      <label>Your street address<input name="sender street address"></label>
+      <label>Your city, state, and postal code<input name="sender city, state, and postal code"></label>
+      <label>Your phone number<input name="sender phone number"></label>
+      <label>Your email address<input name="sender email address"></label>
+      <label>Your full name and title <span class="hint">(e.g. Jane Doe, Managing Partner)</span><input name="sender full name and title"></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>The letter</legend>
+      <label>Today's date<input name="today's date"></label>
+      <label>Client full name<input name="client full name"></label>
+      <label>Client company name<input name="client company name"></label>
+      <label>Project or matter name<input name="project or matter name"></label>
+      <label>Greeting name <span class="hint">(how you address them, e.g. Mr. Smith or first name)</span><input name="greeting name"></label>
+      <label>Update summary <span class="hint">(one or two sentences on where things stand)</span><textarea name="update summary"></textarea></label>
+      <label>What was completed<textarea name="what was completed"></textarea></label>
+      <label>What is happening next<textarea name="what is happening next"></textarea></label>
+      <label>Next step <span class="hint">(the single action coming up)</span><input name="next step"></label>
+      <label>Date or timeframe for next step<input name="date or timeframe for next step"></label>
+      <label>Anything needed from the client<textarea name="anything needed from the client"></textarea></label>
+      <label>Date the client's response is needed by <span class="hint">(an actual date, not "at your convenience")</span><input name="date the client's response is needed by"></label>
+      <label>Closing line <span class="hint">(a warm sign-off sentence)</span><textarea name="closing line"></textarea></label>
+    </fieldset>
+
+    <div class="actions">
+      <button type="button" class="primary" id="fillBtn">Fill the letter</button>
+      <button type="button" class="ghost" id="copyBtn">Copy to clipboard</button>
+      <button type="button" class="ghost" id="downloadBtn">Download</button>
+      <span id="status"></span>
+    </div>
+  </form>
+
+  <h2 class="out">Your finished letter</h2>
+  <div id="output" contenteditable="false" aria-live="polite"></div>
+
+  <footer>
+    This page works offline. Nothing you type leaves your computer.
+  </footer>
+</div>
+
+<script>
+// The template text lives here, matching template.md's BODY prose exactly
+// (same **bold** markers on the labels). The sender business name + address do
+// NOT appear at the top — the letterhead carries the sender identity, so the
+// finished letter never prints the firm name/address twice. The AI takes this
+// filled text, converts **like this** to bold, and drops it into the letterhead
+// template (style.html) as one ready-to-open file.
+// Every {{field}} name matches a form input name letter-for-letter.
+var TEMPLATE = [
+  "{{today's date}}",
+  "",
+  "{{client full name}}",
+  "{{client company name}}",
+  "",
+  "**Re: {{project or matter name}}**",
+  "",
+  "Dear {{greeting name}},",
+  "",
+  "I am writing to give you an update on {{project or matter name}}. {{update summary}}",
+  "",
+  "**What we have completed**",
+  "",
+  "{{what was completed}}",
+  "",
+  "**What is happening next**",
+  "",
+  "{{what is happening next}} The next step is to {{next step}}, which we expect to have underway by {{date or timeframe for next step}}.",
+  "",
+  "**What we need from you**",
+  "",
+  "{{anything needed from the client}} We need this by {{date the client's response is needed by}}.",
+  "",
+  "{{closing line}} If you have any questions or would like to talk any of this through, please reach out at {{sender phone number}} or {{sender email address}}.",
+  "",
+  "Thank you for your continued trust.",
+  "",
+  "Sincerely,",
+  "",
+  "{{sender full name and title}}",
+  "{{sender business name}}"
+].join("\n");
+
+function fillLetter() {
+  var form = document.getElementById("letterForm");
+  var out = TEMPLATE;
+  var inputs = form.querySelectorAll("input, textarea");
+  var missing = [];
+  var values = {};
+  inputs.forEach(function (el) {
+    var key = el.getAttribute("name");
+    var val = el.value.trim();
+    if (!val) missing.push(key);
+    values[key] = val;
+  });
+  // single pass over the ORIGINAL template only — typed answers are never
+  // re-scanned, so an answer containing {{curly braces}} stays as typed
+  out = out.replace(/\{\{([^{}]+)\}\}/g, function (whole, key) {
+    return values[key] ? values[key] : whole;
+  });
+  document.getElementById("output").textContent = out;
+  var status = document.getElementById("status");
+  if (missing.length) {
+    status.textContent = missing.length + " box(es) still empty - filled the rest.";
+  } else {
+    status.textContent = "Done. Every box is filled.";
+  }
+  return out;
+}
+
+function currentText() {
+  var t = document.getElementById("output").textContent;
+  return t && t.length ? t : fillLetter();
+}
+
+document.getElementById("fillBtn").addEventListener("click", fillLetter);
+
+document.getElementById("copyBtn").addEventListener("click", function () {
+  var text = currentText();
+  var status = document.getElementById("status");
+  function fallback() {
+    var ta = document.createElement("textarea");
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); status.textContent = "Copied."; }
+    catch (e) { status.textContent = "Could not copy - select the text and copy by hand."; }
+    document.body.removeChild(ta);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(
+      function () { status.textContent = "Copied."; },
+      fallback
+    );
+  } else { fallback(); }
+});
+
+document.getElementById("downloadBtn").addEventListener("click", function () {
+  var text = currentText();
+  var blob = new Blob([text], { type: "text/plain" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "client-update-letter.txt";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  document.getElementById("status").textContent = "Downloaded.";
+});
+</script>
+</body>
+</html>

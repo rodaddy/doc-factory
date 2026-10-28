@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Client Update Letter</title>
+<!--
+  INTERNAL STYLE TEMPLATE — Client Update Letter — DO NOT HAND THIS FILE TO THE CUSTOMER.
+
+  This is a template the AI READS, never a file the customer edits. The customer
+  never opens this file, never pastes into it, and never touches its HTML.
+
+  How the AI uses it (see workflows/fill-and-render.md):
+   1. Read this file as the layout skeleton.
+   2. Read branding/brand.md and substitute the letterhead (business name,
+      contact line, primary color) from it — replacing the placeholders below.
+   3. Drop the FINISHED, filled letter body straight into <div id="letter">,
+      in place of the sample lines. HTML-escape every field value first:
+      turn & into &amp;, < into &lt;, > into &gt; so names like "Smith & Co."
+      or "<matter>" render correctly instead of breaking the page.
+   4. Do NOT include the sender business name / street address at the top of the
+      letter body — the letterhead above already carries the sender identity.
+      The letter body starts at the date.
+   5. The result goes into the VERIFICATION PAGE, not straight to disk. Clone
+      references/verify-page.html, drop this rendered document into its
+      FILL:DOCUMENT slot along with the checks and the provenance list, and
+      write THAT as <name>-VERIFY.html into the customer's output folder
+      (~/Documents/doc-factory/ by default). No releasable file exists until
+      the customer ticks the box and clicks "I validate this and I want it";
+      the clean printable document then downloads from that page.
+      See workflows/fill-and-render.md Step 6.
+
+  The bold section labels ("What we have completed", etc.) are emitted as real
+  <strong> lines by the render step (see fill-and-render.md Step 3), so they are
+  bold in the finished PDF regardless of how the letter was filled.
+-->
+<style>
+  @page { size: letter; margin: 1in; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 11.5pt;
+    line-height: 1.5;
+    color: #1a1a1a;
+  }
+  .sheet {
+    max-width: 6.5in;      /* 8.5in page minus 1in margins each side */
+    margin: 0 auto;
+    padding: 0.25in 0 0;
+  }
+  /* Letterhead — the AI swaps the color + name for the brand (branding/brand.md) */
+  .letterhead {
+    border-bottom: 2px solid #6b1f2a;   /* primary color */
+    padding-bottom: 8px;
+    margin-bottom: 24px;
+  }
+  .letterhead .name {
+    font-size: 18pt;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: #6b1f2a;                     /* primary color */
+  }
+  .letterhead .contact { font-size: 9.5pt; color: #555; margin-top: 2px; }
+  #letter { white-space: pre-wrap; }    /* preserves the paragraph spacing exactly */
+  #letter strong { font-weight: bold; } /* the section labels stay bold */
+  strong, b { font-weight: bold; }
+  @media print {
+    body { font-size: 11.5pt; }
+  }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
+</head>
+<body>
+  <div class="sheet">
+    <!-- LETTERHEAD: the AI replaces this with the business name + contact line
+         from branding/brand.md. This is the ONLY place the sender identity
+         appears — the letter body below must NOT repeat the sender name/address.
+         If the brand has a logo image, the AI puts
+         <img src="logo.png" style="height:48px"> here instead of the name. -->
+    <div class="letterhead">
+      <div class="name">{{sender business name}}</div>
+      <div class="contact">{{sender contact line}}</div>
+    </div>
+
+    <!-- LETTER BODY: the AI drops the finished, HTML-escaped letter here,
+         starting at the date. Section labels come in as <strong>…</strong>.
+         The sample below shows the exact shape; the render step REPLACES it. -->
+    <div id="letter">{{finished letter body}}</div>
+  </div>
+</body>
+</html>
