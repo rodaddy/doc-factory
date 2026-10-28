@@ -378,7 +378,7 @@ their behalf. When the document goes to a client or a court, the AI drafts and
 the person sends. Say so.
 
 <!--
-PRO LANE (Rico's done-for-you cut only — do not surface to the customer):
+PRO LANE (done-for-you service only — do not surface to the customer):
 render the filled markdown deterministically with
 `pandoc <filled>.md -o <out>.pdf --pdf-engine=xelatex -H <locked-style>.tex`,
 never plain pandoc. The proven resumeUpdate pattern. Sharpest output, but
