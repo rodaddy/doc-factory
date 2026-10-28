@@ -179,7 +179,7 @@ When you drop field values into any page, HTML-escape them (`&`→`&amp;`,
 the page, and the sender identity appears ONLY in the letterhead.
 
 <!--
-PRO LANE (do not offer to the customer; note for Rico's own "done-for-you"
+PRO LANE (do not offer to the customer; note for the "done-for-you" service
 cut): the same filled markdown can be rendered with
 `pandoc --pdf-engine=xelatex -H <locked-style>.tex` — the proven resumeUpdate
 pattern, "never use plain pandoc." Crispest PDF, but needs LaTeX installed, so

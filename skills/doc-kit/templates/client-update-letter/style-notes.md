@@ -70,7 +70,7 @@ HTML file.
 ## Pro lane (optional, for the done-for-you cut)
 
 The customer path above uses the browser to make the PDF — no software to
-install. Rico's own "pro" lane renders the same filled markdown through
+install. The done-for-you "pro" lane renders the same filled markdown through
 `pandoc --pdf-engine=xelatex` with a locked `.tex` style header (the proven
 resumeUpdate pattern). Same discipline — locked style, one deterministic
 command, never plain pandoc — but it needs LaTeX installed, so it stays off
